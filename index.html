@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+    <title>Hotel Booking Registration Form</title>
+<style>
+    body{
+        background:url("pexels.jpg")
+    }
+    
+    form{
+                color: rgb(192, 255, 20);
+                top: 16%;
+                background-color:rgb(17, 19, 18);
+                border-radius: 5px;
+                border: 5px solid rgb(223, 21, 189) ;
+                position: absolute;
+                left: 500px;   
+                height: 500px;
+                     
+    }
+    h1{
+        color: red;
+        background-color: black;
+    }
+    h2{
+                color: deeppink;
+                text-align: center;
+                top: 6%;
+                background-color:white;
+                border-radius: 5px;
+                position: absolute;
+                -webkit-animation: linear infinite;
+                -webkit-animation-name: run;
+                -webkit-animation-duration: 55s;
+                
+            }
+            @-webkit-keyframes run {
+                0% {
+                    left:0;
+                }
+                50% {
+                    left:100%;
+                }
+                100% {
+                    left: 0;
+                }
+            }
+            h3{
+                color: rgb(20, 75, 255);
+                background-color:white;
+                border-radius: 5px;
+                bottom:-2%;
+                text-align: center;
+                position: absolute;
+                -webkit-animation: linear infinite;
+                -webkit-animation-name: run;
+                -webkit-animation-duration: 55s;
+                
+            }
+            
+            @-webkit-keyframes run {
+                0% {
+                    left:0;
+                }
+                50% {
+                    left:100%;
+                }
+                100% {
+                    left: 0;
+                }
+            }
+    
+</style>
+
+</head>
+<body>
+    
+<h1 align="center">Hotel Booking Registration Form</h1>
+<h2>&#127802;Welcome in Our Hotel&#127802;</h2>
+<h3>Thanks &#128591; &#128588; for visit to our Hotel website </h3>
+
+<form id="bookingForm">
+    
+    <div>
+        <label for="customerName">Customer Name:</label>
+        <input type="text" id="customerName" required>
+    </div>
+    <br>
+    <div>
+        <label for="checkInDate">Check-in Date:</label>
+        <input type="date" id="checkInDate" required>
+    </div>
+    <br>
+    <div>
+        <label for="totalDays">Total No of Days:</label>
+        <input type="number" id="totalDays" required>
+    </div>
+    <br>
+    <div>
+        <label for="totalPersons">Total No of Persons:</label>
+        <input type="number" id="totalPersons" required>
+    </div>
+    <br>
+    <div>
+        <label for="roomType">Room Type:</label>
+        <select id="roomType">
+            <option value="Delux">Delux Room</option>
+            <option value="Suite">Suite Room</option>
+        </select>
+    </div>
+    <br>
+    <div>
+        <label for="amenities">Amenities:</label>
+        <select id="amenities" multiple>
+            <option value="AC">AC</option>
+            <option value="Locker">Locker</option>
+        </select>
+    </div>
+    <br>
+    <div>
+        <label for="advanceAmount">Advance Amount:</label>
+        <input type="number" id="advanceAmount" required>
+    </div>
+    <br>
+    <div>
+        <label>Total Room Cost:</label>
+        <span id="totalRoomCost">0</span>
+    </div>
+    <br>
+    <div>
+        <label>Total Amenities Cost:</label>
+        <span id="totalAmenitiesCost">0</span>
+    </div>
+    <br>
+    <div>
+        <label>Total Cost:</label>
+        <span id="totalCost">0</span>
+    </div>
+    <br>
+    <div>
+        <label>Balance:</label>
+        <span id="balance">0</span>
+    </div>
+    <br>
+    <button type="submit">Submit</button>
+    <button type="reset">Reset</button>
+
+</form>
+
+<script>
+    const form = document.getElementById("bookingForm");
+
+    form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        calculateCost();
+    });
+
+    function calculateCost() {
+        const totalDays = parseInt(document.getElementById("totalDays").value);
+        const roomType = document.getElementById("roomType").value;
+        const amenities = document.getElementById("amenities").selectedOptions;
+        const advanceAmount = parseInt(document.getElementById("advanceAmount").value);
+
+        const roomRate = (roomType === "Delux") ? 2500 : 4000;
+        const amenitiesCost = Array.from(amenities).reduce((acc, option) => {
+            if (option.value === "AC") {
+                return acc + 1000;
+            }
+            if (option.value === "Locker") {
+                return acc + 300;
+            }
+            return acc;
+        }, 0);
+
+        const totalRoomCost = roomRate * totalDays;
+        const totalAmenitiesCost = amenitiesCost * totalDays;
+        const totalCost = totalRoomCost + totalAmenitiesCost;
+        const balance = totalCost - advanceAmount;
+
+        document.getElementById("totalRoomCost").textContent = totalRoomCost;
+        document.getElementById("totalAmenitiesCost").textContent = totalAmenitiesCost;
+        document.getElementById("totalCost").textContent = totalCost;
+        document.getElementById("balance").textContent = balance;
+    }
+</script>
+
+</body>
+</html>
